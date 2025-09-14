@@ -354,16 +354,445 @@ class BarcodeHistoryTableCompanion
   }
 }
 
+class $DocumentHistoryTableTable extends DocumentHistoryTable
+    with TableInfo<$DocumentHistoryTableTable, DocumentHistoryTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DocumentHistoryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 36,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pdfPathMeta = const VerificationMeta(
+    'pdfPath',
+  );
+  @override
+  late final GeneratedColumn<String> pdfPath = GeneratedColumn<String>(
+    'pdf_path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _imagePathsMeta = const VerificationMeta(
+    'imagePaths',
+  );
+  @override
+  late final GeneratedColumn<String> imagePaths = GeneratedColumn<String>(
+    'image_paths',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isFavoriteMeta = const VerificationMeta(
+    'isFavorite',
+  );
+  @override
+  late final GeneratedColumn<bool> isFavorite = GeneratedColumn<bool>(
+    'is_favorite',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_favorite" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    pdfPath,
+    imagePaths,
+    isFavorite,
+    note,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'document_history_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DocumentHistoryTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('pdf_path')) {
+      context.handle(
+        _pdfPathMeta,
+        pdfPath.isAcceptableOrUnknown(data['pdf_path']!, _pdfPathMeta),
+      );
+    }
+    if (data.containsKey('image_paths')) {
+      context.handle(
+        _imagePathsMeta,
+        imagePaths.isAcceptableOrUnknown(data['image_paths']!, _imagePathsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_imagePathsMeta);
+    }
+    if (data.containsKey('is_favorite')) {
+      context.handle(
+        _isFavoriteMeta,
+        isFavorite.isAcceptableOrUnknown(data['is_favorite']!, _isFavoriteMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DocumentHistoryTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DocumentHistoryTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      pdfPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}pdf_path'],
+      ),
+      imagePaths: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_paths'],
+      )!,
+      isFavorite: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_favorite'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $DocumentHistoryTableTable createAlias(String alias) {
+    return $DocumentHistoryTableTable(attachedDatabase, alias);
+  }
+}
+
+class DocumentHistoryTableData extends DataClass
+    implements Insertable<DocumentHistoryTableData> {
+  final String id;
+  final String? pdfPath;
+  final String imagePaths;
+  final bool isFavorite;
+  final String? note;
+  final DateTime createdAt;
+  const DocumentHistoryTableData({
+    required this.id,
+    this.pdfPath,
+    required this.imagePaths,
+    required this.isFavorite,
+    this.note,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || pdfPath != null) {
+      map['pdf_path'] = Variable<String>(pdfPath);
+    }
+    map['image_paths'] = Variable<String>(imagePaths);
+    map['is_favorite'] = Variable<bool>(isFavorite);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  DocumentHistoryTableCompanion toCompanion(bool nullToAbsent) {
+    return DocumentHistoryTableCompanion(
+      id: Value(id),
+      pdfPath: pdfPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pdfPath),
+      imagePaths: Value(imagePaths),
+      isFavorite: Value(isFavorite),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory DocumentHistoryTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DocumentHistoryTableData(
+      id: serializer.fromJson<String>(json['id']),
+      pdfPath: serializer.fromJson<String?>(json['pdfPath']),
+      imagePaths: serializer.fromJson<String>(json['imagePaths']),
+      isFavorite: serializer.fromJson<bool>(json['isFavorite']),
+      note: serializer.fromJson<String?>(json['note']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'pdfPath': serializer.toJson<String?>(pdfPath),
+      'imagePaths': serializer.toJson<String>(imagePaths),
+      'isFavorite': serializer.toJson<bool>(isFavorite),
+      'note': serializer.toJson<String?>(note),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  DocumentHistoryTableData copyWith({
+    String? id,
+    Value<String?> pdfPath = const Value.absent(),
+    String? imagePaths,
+    bool? isFavorite,
+    Value<String?> note = const Value.absent(),
+    DateTime? createdAt,
+  }) => DocumentHistoryTableData(
+    id: id ?? this.id,
+    pdfPath: pdfPath.present ? pdfPath.value : this.pdfPath,
+    imagePaths: imagePaths ?? this.imagePaths,
+    isFavorite: isFavorite ?? this.isFavorite,
+    note: note.present ? note.value : this.note,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  DocumentHistoryTableData copyWithCompanion(
+    DocumentHistoryTableCompanion data,
+  ) {
+    return DocumentHistoryTableData(
+      id: data.id.present ? data.id.value : this.id,
+      pdfPath: data.pdfPath.present ? data.pdfPath.value : this.pdfPath,
+      imagePaths: data.imagePaths.present
+          ? data.imagePaths.value
+          : this.imagePaths,
+      isFavorite: data.isFavorite.present
+          ? data.isFavorite.value
+          : this.isFavorite,
+      note: data.note.present ? data.note.value : this.note,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DocumentHistoryTableData(')
+          ..write('id: $id, ')
+          ..write('pdfPath: $pdfPath, ')
+          ..write('imagePaths: $imagePaths, ')
+          ..write('isFavorite: $isFavorite, ')
+          ..write('note: $note, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, pdfPath, imagePaths, isFavorite, note, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DocumentHistoryTableData &&
+          other.id == this.id &&
+          other.pdfPath == this.pdfPath &&
+          other.imagePaths == this.imagePaths &&
+          other.isFavorite == this.isFavorite &&
+          other.note == this.note &&
+          other.createdAt == this.createdAt);
+}
+
+class DocumentHistoryTableCompanion
+    extends UpdateCompanion<DocumentHistoryTableData> {
+  final Value<String> id;
+  final Value<String?> pdfPath;
+  final Value<String> imagePaths;
+  final Value<bool> isFavorite;
+  final Value<String?> note;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const DocumentHistoryTableCompanion({
+    this.id = const Value.absent(),
+    this.pdfPath = const Value.absent(),
+    this.imagePaths = const Value.absent(),
+    this.isFavorite = const Value.absent(),
+    this.note = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DocumentHistoryTableCompanion.insert({
+    required String id,
+    this.pdfPath = const Value.absent(),
+    required String imagePaths,
+    this.isFavorite = const Value.absent(),
+    this.note = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       imagePaths = Value(imagePaths),
+       createdAt = Value(createdAt);
+  static Insertable<DocumentHistoryTableData> custom({
+    Expression<String>? id,
+    Expression<String>? pdfPath,
+    Expression<String>? imagePaths,
+    Expression<bool>? isFavorite,
+    Expression<String>? note,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (pdfPath != null) 'pdf_path': pdfPath,
+      if (imagePaths != null) 'image_paths': imagePaths,
+      if (isFavorite != null) 'is_favorite': isFavorite,
+      if (note != null) 'note': note,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DocumentHistoryTableCompanion copyWith({
+    Value<String>? id,
+    Value<String?>? pdfPath,
+    Value<String>? imagePaths,
+    Value<bool>? isFavorite,
+    Value<String?>? note,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return DocumentHistoryTableCompanion(
+      id: id ?? this.id,
+      pdfPath: pdfPath ?? this.pdfPath,
+      imagePaths: imagePaths ?? this.imagePaths,
+      isFavorite: isFavorite ?? this.isFavorite,
+      note: note ?? this.note,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (pdfPath.present) {
+      map['pdf_path'] = Variable<String>(pdfPath.value);
+    }
+    if (imagePaths.present) {
+      map['image_paths'] = Variable<String>(imagePaths.value);
+    }
+    if (isFavorite.present) {
+      map['is_favorite'] = Variable<bool>(isFavorite.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DocumentHistoryTableCompanion(')
+          ..write('id: $id, ')
+          ..write('pdfPath: $pdfPath, ')
+          ..write('imagePaths: $imagePaths, ')
+          ..write('isFavorite: $isFavorite, ')
+          ..write('note: $note, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $BarcodeHistoryTableTable barcodeHistoryTable =
       $BarcodeHistoryTableTable(this);
+  late final $DocumentHistoryTableTable documentHistoryTable =
+      $DocumentHistoryTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [barcodeHistoryTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    barcodeHistoryTable,
+    documentHistoryTable,
+  ];
 }
 
 typedef $$BarcodeHistoryTableTableCreateCompanionBuilder =
@@ -642,10 +1071,251 @@ typedef $$BarcodeHistoryTableTableProcessedTableManager =
       BarcodeHistoryEntity,
       PrefetchHooks Function()
     >;
+typedef $$DocumentHistoryTableTableCreateCompanionBuilder =
+    DocumentHistoryTableCompanion Function({
+      required String id,
+      Value<String?> pdfPath,
+      required String imagePaths,
+      Value<bool> isFavorite,
+      Value<String?> note,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$DocumentHistoryTableTableUpdateCompanionBuilder =
+    DocumentHistoryTableCompanion Function({
+      Value<String> id,
+      Value<String?> pdfPath,
+      Value<String> imagePaths,
+      Value<bool> isFavorite,
+      Value<String?> note,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$DocumentHistoryTableTableFilterComposer
+    extends Composer<_$AppDatabase, $DocumentHistoryTableTable> {
+  $$DocumentHistoryTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get pdfPath => $composableBuilder(
+    column: $table.pdfPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imagePaths => $composableBuilder(
+    column: $table.imagePaths,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isFavorite => $composableBuilder(
+    column: $table.isFavorite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$DocumentHistoryTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $DocumentHistoryTableTable> {
+  $$DocumentHistoryTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get pdfPath => $composableBuilder(
+    column: $table.pdfPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get imagePaths => $composableBuilder(
+    column: $table.imagePaths,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isFavorite => $composableBuilder(
+    column: $table.isFavorite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DocumentHistoryTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DocumentHistoryTableTable> {
+  $$DocumentHistoryTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get pdfPath =>
+      $composableBuilder(column: $table.pdfPath, builder: (column) => column);
+
+  GeneratedColumn<String> get imagePaths => $composableBuilder(
+    column: $table.imagePaths,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isFavorite => $composableBuilder(
+    column: $table.isFavorite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$DocumentHistoryTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DocumentHistoryTableTable,
+          DocumentHistoryTableData,
+          $$DocumentHistoryTableTableFilterComposer,
+          $$DocumentHistoryTableTableOrderingComposer,
+          $$DocumentHistoryTableTableAnnotationComposer,
+          $$DocumentHistoryTableTableCreateCompanionBuilder,
+          $$DocumentHistoryTableTableUpdateCompanionBuilder,
+          (
+            DocumentHistoryTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $DocumentHistoryTableTable,
+              DocumentHistoryTableData
+            >,
+          ),
+          DocumentHistoryTableData,
+          PrefetchHooks Function()
+        > {
+  $$DocumentHistoryTableTableTableManager(
+    _$AppDatabase db,
+    $DocumentHistoryTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DocumentHistoryTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DocumentHistoryTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$DocumentHistoryTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String?> pdfPath = const Value.absent(),
+                Value<String> imagePaths = const Value.absent(),
+                Value<bool> isFavorite = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DocumentHistoryTableCompanion(
+                id: id,
+                pdfPath: pdfPath,
+                imagePaths: imagePaths,
+                isFavorite: isFavorite,
+                note: note,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                Value<String?> pdfPath = const Value.absent(),
+                required String imagePaths,
+                Value<bool> isFavorite = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => DocumentHistoryTableCompanion.insert(
+                id: id,
+                pdfPath: pdfPath,
+                imagePaths: imagePaths,
+                isFavorite: isFavorite,
+                note: note,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$DocumentHistoryTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DocumentHistoryTableTable,
+      DocumentHistoryTableData,
+      $$DocumentHistoryTableTableFilterComposer,
+      $$DocumentHistoryTableTableOrderingComposer,
+      $$DocumentHistoryTableTableAnnotationComposer,
+      $$DocumentHistoryTableTableCreateCompanionBuilder,
+      $$DocumentHistoryTableTableUpdateCompanionBuilder,
+      (
+        DocumentHistoryTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $DocumentHistoryTableTable,
+          DocumentHistoryTableData
+        >,
+      ),
+      DocumentHistoryTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$BarcodeHistoryTableTableTableManager get barcodeHistoryTable =>
       $$BarcodeHistoryTableTableTableManager(_db, _db.barcodeHistoryTable);
+  $$DocumentHistoryTableTableTableManager get documentHistoryTable =>
+      $$DocumentHistoryTableTableTableManager(_db, _db.documentHistoryTable);
 }

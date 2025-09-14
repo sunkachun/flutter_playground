@@ -5,6 +5,7 @@ enum Button {
   weather('Weather', '/weather'),
   download('Download', '/download'),
   barcode('Barcode Scanner', '/barcode'),
+  document('Document Scanner', '/document'),
   search('Search', '/search');
 
   final String name;
@@ -16,7 +17,8 @@ class ButtonListPage extends StatelessWidget {
   final List<Button> buttonLabels = [
     Button.weather,
     Button.download,
-    Button.barcode
+    Button.barcode,
+    Button.document
   ];
 
   ButtonListPage({super.key});

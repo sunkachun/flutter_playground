@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/features/barcode/presentation/barcode_history_view.dart';
 import 'package:flutter_playground/features/barcode/presentation/barcode_scanner_screen.dart';
 import 'package:flutter_playground/features/barcode/presentation/cubit/barcode_cubit.dart';
+import 'package:flutter_playground/features/documentscanner/presentation/cubit/document_cubit.dart';
+import 'package:flutter_playground/features/documentscanner/presentation/screen/document_scanner_page.dart';
 import 'package:flutter_playground/features/download/presentation/screens/download_list_screen.dart';
 import 'package:flutter_playground/features/entry/ButtonListPage.dart';
 import 'package:flutter_playground/features/weather/presentation/page/weather_forecast_page.dart';
@@ -51,6 +53,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           return BlocProvider(
             create: (_) => BarcodeCubit()..init(),
             child: BarcodeHistoryView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/document',
+        name: 'document',
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => DocumentCubit()..init(),
+            child: DocumentScannerScreen(),
           );
         },
       ),
